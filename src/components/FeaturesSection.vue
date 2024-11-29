@@ -26,7 +26,7 @@
               >
                 <CardHeader>
                   <CardTitle class="font-semibold text-indigo-700"
-                    >Chat with your video</CardTitle
+                    >Transcribe your videos</CardTitle
                   >
                 </CardHeader>
               </Card>
@@ -49,17 +49,6 @@
                 <CardHeader>
                   <CardTitle class="font-semibold text-yellow-700"
                     >Quizzes to remember</CardTitle
-                  >
-                </CardHeader>
-              </Card>
-            </li>
-            <li>
-              <Card
-                class="p-5 transition duration-300 bg-red-100 rounded-lg shadow-lg hover:bg-red-200 hover:shadow-xl"
-              >
-                <CardHeader>
-                  <CardTitle class="font-semibold text-red-700"
-                    >Get your code</CardTitle
                   >
                 </CardHeader>
               </Card>

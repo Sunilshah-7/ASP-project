@@ -21,6 +21,7 @@
           <TutorialSection />
           <FeaturesSection />
         </div>
+        <!-- <SummaryPage videoUrl="https://www.youtube.com/watch?v=Onf7AKGHBzg" /> -->
       </section>
     </main>
     <footer
@@ -37,7 +38,7 @@ import HeroSection from "./HeroSection.vue";
 import TeamSection from "./TeamSection.vue";
 import FeaturesSection from "./FeaturesSection.vue";
 import TutorialSection from "./TutorialSection.vue";
-
+import SummaryPage from "./SummaryPage.vue";
 export default defineComponent({
   name: "AIAssistantPage",
   components: {
@@ -45,6 +46,7 @@ export default defineComponent({
     TeamSection,
     FeaturesSection,
     TutorialSection,
+    SummaryPage,
   },
 });
 </script>

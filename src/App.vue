@@ -1,15 +1,10 @@
 <template>
-  <AIAssistantPage />
+  <router-view />
 </template>
 
 <script>
-import AIAssistantPage from "./components/AiAssistantPage.vue";
-
 export default {
   name: "App",
-  components: {
-    AIAssistantPage,
-  },
 };
 </script>
 
