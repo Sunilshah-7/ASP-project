@@ -44,30 +44,52 @@
       />
       <button
         type="submit"
+        :disabled="loading"
         class="w-1/5 flex justify-center items-center text-white whitespace-nowrap bg-indigo-600 rounded-xl min-h-[70px]"
       >
-        <span class="self-stretch gap-1 my-auto">Interact</span>
+        <span class="self-stretch gap-1 my-auto">{{
+          loading ? "Loading..." : "Interact"
+        }}</span>
       </button>
     </form>
   </div>
 </template>
 
 <script>
+import { upload } from "@/api/request.js";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 export default {
   name: "HeroSection",
   data() {
     return {
       youtubeUrl: "",
+      loading: false,
     };
   },
   methods: {
     async handleSubmit() {
       const videoId = this.youtubeUrl.split("v=")[1]?.split("&")[0];
       if (videoId) {
-        //const response = await axios.post("http://localhost:3000/api/process-video", { videoId });
-        this.$router.push({ path: "/summary", query: { v: videoId } });
+        this.loading = true;
+        try {
+          const response = await upload(this.youtubeUrl);
+          if (response.status === 200) {
+            toast.success("Video uploaded successfully!");
+            setTimeout(() => {
+              this.$router.push({ path: "/summary", query: { v: videoId } });
+            }, 2000);
+          } else {
+            toast.error("Failed to upload the video. Please try again.");
+          }
+        } catch (error) {
+          toast.error("An error occurred. Please try again.");
+        } finally {
+          this.loading = false;
+        }
       } else {
-        alert("Please enter a valid YouTube URL.");
+        toast.error("Please enter a valid YouTube URL.");
       }
     },
   },
