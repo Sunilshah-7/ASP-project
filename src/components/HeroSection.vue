@@ -61,9 +61,10 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
+    async handleSubmit() {
       const videoId = this.youtubeUrl.split("v=")[1]?.split("&")[0];
       if (videoId) {
+        //const response = await axios.post("http://localhost:3000/api/process-video", { videoId });
         this.$router.push({ path: "/summary", query: { v: videoId } });
       } else {
         alert("Please enter a valid YouTube URL.");
