@@ -183,10 +183,8 @@ export default {
       this.loadingTab1 = true;
       try {
         const response = await getTranscript();
-        this.transcripts = response;
-        // console.log("Transcript data:", this.transcripts);
 
-        // Map raw transcript data and format time
+        // Map raw transcript data and format te
         this.transcripts = response.map((transcript) => ({
           ...transcript,
           line_start: this.formatTime(parseFloat(transcript.line_start)),
@@ -294,8 +292,8 @@ iframe {
 }
 .transcript-container,
 .summary-container {
-  height: 500px;
-  overflow-y: auto;
+  max-height: 550px; /* Set a maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
   padding: 10px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
