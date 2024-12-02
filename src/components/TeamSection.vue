@@ -11,7 +11,7 @@
       >
         <img
           loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c6917484ccb19dc08cf8ebfc545fdf79d3eae1a53f908807bb6d4bb49ea501f?placeholderIfAbsent=true&apiKey=26babde2ec0e40baafbcc47b204b6c36"
+          src="@/assets/keith.jpeg"
           alt="Keith Zhang"
           class="object-cover w-[250px] h-[250px] rounded-full team-image"
         />
@@ -66,7 +66,7 @@
       >
         <img
           loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/3c7dc5e922fbc1db908c8d5dbe81c062ff6d388535873aaa16467adc8c233787?placeholderIfAbsent=true&apiKey=26babde2ec0e40baafbcc47b204b6c36"
+          src="@/assets/haoyu.jpg"
           alt="Haoyu Guo"
           class="object-cover w-[250px] h-[250px] rounded-full team-image"
         />
