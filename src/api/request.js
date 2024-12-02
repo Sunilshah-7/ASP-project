@@ -27,11 +27,22 @@ export const getTranscript = async () => {
 };
 
 export const getSummary = async () => {
-  const response = await axios.get(baseUrl + "/summary");
-  return response.data;
+  try {
+    const response = await axios.get(baseUrl + "/summary");
+    return response.data;
+    // return response.data;
+  } catch (error) {
+    console.error("Error fetching summary:", error.response || error.message);
+    throw error;
+  }
 };
 
 export const getQuiz = async () => {
-  const response = await axios.get(baseUrl + "/quiz");
-  return response.data;
+  try {
+    const response = await axios.get(baseUrl + "/quiz");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching quiz:", error.response || error.message);
+    throw error;
+  }
 };

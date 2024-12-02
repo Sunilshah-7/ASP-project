@@ -3,7 +3,7 @@
     <header class="ml-8 max-md:ml-2.5">
       <img
         loading="lazy"
-        src="@/assets/ap-logo.png"
+        src="@/assets/home-logo.png"
         alt="AI Assistant Logo"
         class="object-contain max-w-full aspect-[1.52] w-[156px]"
       />

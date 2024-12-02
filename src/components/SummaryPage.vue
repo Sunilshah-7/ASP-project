@@ -3,7 +3,7 @@
     <header class="ml-8 max-md:ml-2.5">
       <img
         loading="lazy"
-        src="@/assets/ap-logo.png"
+        src="@/assets/home-logo.png"
         alt="AI Assistant Logo"
         class="object-contain max-w-full aspect-[1.52] w-[156px]"
       />
@@ -85,9 +85,28 @@
                     {{ quizzes[currentQuizIndex].question }}
                   </div>
                   <div class="options">
-                    <button @click="submitAnswer('True')">True</button>
-                    <button @click="submitAnswer('False')">False</button>
+                    <label>
+                      <input
+                        type="radio"
+                        name="quiz"
+                        value="True"
+                        v-model="selectedAnswer"
+                      />
+                      True
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="quiz"
+                        value="False"
+                        v-model="selectedAnswer"
+                      />
+                      False
+                    </label>
                   </div>
+                  <button class="quiz-button" @click="submitAnswer">
+                    Submit
+                  </button>
                   <div class="feedback" v-if="feedback">
                     {{ feedback }}
                   </div>
@@ -98,7 +117,9 @@
                     You answered {{ correctAnswers }} /
                     {{ quizzes.length }} correctly.
                   </p>
-                  <button @click="restartQuiz">Restart Quiz</button>
+                  <button class="quiz-button" @click="restartQuiz">
+                    Restart Quiz
+                  </button>
                 </div>
               </div>
             </TabsContent>
@@ -140,15 +161,38 @@ export default {
       loadingTab1: true, // Loading status for Transcript
       loadingTab2: true, // Loading status for Summary
       loadingTab3: true, // Loading status for Quizzes
+      selectedAnswer: "", // Selected answer for the quiz
     };
   },
   methods: {
+    formatTime(timeInSeconds) {
+      const hours = Math.floor(timeInSeconds / 3600);
+      const minutes = Math.floor((timeInSeconds % 3600) / 60);
+      const seconds = Math.floor(timeInSeconds % 60);
+      //If the hour is 0, only minutes and seconds are displayed, otherwise the full time is displayed
+      if (hours > 0) {
+        return `${hours.toString().padStart(2, "0")}:${minutes
+          .toString()
+          .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+      }
+      return `${minutes.toString().padStart(2, "0")}:${seconds
+        .toString()
+        .padStart(2, "0")}`;
+    },
     async fetchTranscript() {
       this.loadingTab1 = true;
       try {
         const response = await getTranscript();
         this.transcripts = response;
-        console.log("Transcript data:", this.transcripts);
+        // console.log("Transcript data:", this.transcripts);
+
+        // Map raw transcript data and format time
+        this.transcripts = response.map((transcript) => ({
+          ...transcript,
+          line_start: this.formatTime(parseFloat(transcript.line_start)),
+          line_end: this.formatTime(parseFloat(transcript.line_end)),
+        }));
+        console.log("Formatted transcript data:", this.transcripts);
       } catch (error) {
         console.error("Error fetching transcript:", error);
         toast.error("Failed to load transcript content.");
@@ -159,8 +203,14 @@ export default {
     async fetchSummary() {
       this.loadingTab2 = true;
       try {
-        const response = await fetch("/summary.json"); // Local file fetch
-        this.summary = await response.json();
+        const response = await getSummary();
+        // this.summary = response;
+        this.summary = response.map((topic) => ({
+          ...topic,
+          time_start: this.formatTime(parseFloat(topic.time_start)),
+          time_end: this.formatTime(parseFloat(topic.time_end)),
+        }));
+        console.log("Summary data:", this.summary);
       } catch (error) {
         console.error("Error fetching summary:", error);
         toast.error("Failed to load summary content.");
@@ -171,8 +221,9 @@ export default {
     async fetchQuizzes() {
       this.loadingTab3 = true;
       try {
-        const response = await fetch("/quiz.json"); // Local file fetch
-        this.quizzes = await response.json();
+        const response = await getQuiz();
+        this.quizzes = response;
+        console.log("Quiz data:", this.quizzes);
       } catch (error) {
         console.error("Error fetching quizzes:", error);
         toast.error("Failed to load quizzes.");
@@ -180,8 +231,11 @@ export default {
         this.loadingTab3 = false;
       }
     },
-    submitAnswer(answer) {
-      if (answer === this.quizzes[this.currentQuizIndex].correct_answer) {
+    submitAnswer() {
+      if (
+        this.selectedAnswer ===
+        this.quizzes[this.currentQuizIndex].correct_answer
+      ) {
         this.correctAnswers++;
         this.feedback = "Correct!";
       } else {
@@ -193,19 +247,24 @@ export default {
       setTimeout(() => {
         this.feedback = "";
         this.currentQuizIndex++;
+        this.selectedAnswer = ""; // Reset the selected answer
       }, 1000);
     },
     restartQuiz() {
       this.currentQuizIndex = 0;
       this.correctAnswers = 0;
       this.feedback = "";
+      this.selectedAnswer = ""; // Reset the selected answer
     },
   },
-  mounted() {
-    // Restore local fetch methods
-    this.fetchTranscript();
-    this.fetchSummary();
-    this.fetchQuizzes();
+  async mounted() {
+    try {
+      await this.fetchTranscript();
+      await this.fetchSummary();
+      await this.fetchQuizzes();
+    } catch (error) {
+      console.error("Error during data fetching:", error);
+    }
   },
 };
 </script>
@@ -259,12 +318,27 @@ iframe {
   font-size: 18px;
   margin-bottom: 10px;
 }
-.options button {
+.options label {
   display: block;
   margin: 10px 0;
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
+}
+.quiz-button {
+  display: block;
+  margin: 10px 0;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #4f46e5; /* Indigo background */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+}
+.quiz-button:hover {
+  background-color: #4338ca; /* Darker indigo on hover */
 }
 .feedback {
   margin-top: 10px;
