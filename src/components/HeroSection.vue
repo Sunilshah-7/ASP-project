@@ -11,8 +11,7 @@
               for your next youtube video
             </h1>
             <p class="self-start mt-4 text-3xl max-md:max-w-full">
-              Your personal tool to help you summarize, question and educate in
-              an
+              Your personal tool to help you summarize and educate in an
               <span class="font-bold text-indigo-600">interactive</span>
               manner
             </p>

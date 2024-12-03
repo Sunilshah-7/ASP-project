@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const baseUrl = "http://127.0.0.1:20000";
+// const baseUrl = "http://127.0.0.1:20000";
+const baseUrl = "http://71.200.16.71:20000";
 
 export const upload = async (link) => {
   const params = new URLSearchParams();

@@ -40,7 +40,7 @@
               <CardHeader>
                 <CardTitle class="font-semibold text-yellow-700"
                   >Watch your favorite video with it and
-                  <span class="text-indigo-600">mainly </span>ask questions to
+                  <span class="text-indigo-600">mainly </span>get insights of
                   your video.</CardTitle
                 >
               </CardHeader>

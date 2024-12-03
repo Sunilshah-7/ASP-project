@@ -51,21 +51,29 @@
             <TabsContent value="tab2">
               <p v-if="loadingTab2">Loading summary content...</p>
               <div v-else class="summary-container">
-                <div v-for="(topic, index) in summary" :key="index">
-                  <h3>{{ topic.main_topic }}</h3>
-                  <p>
-                    <strong>Time Range:</strong> {{ topic.time_start }} -
-                    {{ topic.time_end }}
-                  </p>
-                  <ul>
-                    <li
-                      v-for="(subtopic, subIndex) in topic.subtopics"
-                      :key="subIndex"
-                    >
-                      {{ subtopic }}
-                    </li>
-                  </ul>
-                </div>
+                <Card v-for="(topic, index) in summary" :key="index">
+                  <CardHeader>
+                    <CardTitle>{{ topic.main_topic }}</CardTitle>
+                    <CardDescription>
+                      <strong>Time Range:</strong> {{ topic.time_start }} -
+                      {{ topic.time_end }}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <img
+                      :src="'data:image/jpeg;base64,' + topic.key_frame_img"
+                      alt="Key Frame Image"
+                    />
+                    <ul>
+                      <li
+                        v-for="(subtopic, subIndex) in topic.subtopics"
+                        :key="subIndex"
+                      >
+                        {{ subtopic }}
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
               </div>
             </TabsContent>
             <TabsContent value="tab3">
@@ -132,6 +140,13 @@
 
 <script>
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { getTranscript, getSummary, getQuiz } from "@/api/request";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -149,6 +164,11 @@ export default {
     TabsContent,
     TabsList,
     TabsTrigger,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
   },
   data() {
     return {
