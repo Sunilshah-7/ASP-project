@@ -255,15 +255,32 @@ export default {
         this.quizzes[this.currentQuizIndex].correct_answer
       ) {
         this.correctAnswers++;
-        this.feedback = "Correct!";
+        toast.success("Correct!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } else {
-        this.feedback =
+        toast.error(
           "Wrong! The correct answer is " +
-          this.quizzes[this.currentQuizIndex].correct_answer +
-          ".";
+            this.quizzes[this.currentQuizIndex].correct_answer +
+            ".",
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
       }
       setTimeout(() => {
-        this.feedback = "";
         this.currentQuizIndex++;
         this.selectedAnswer = ""; // Reset the selected answer
       }, 1000);
